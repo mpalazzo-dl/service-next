@@ -7,9 +7,9 @@ import { buildArticlePath } from "@aces/utils";
 import { searchKnowledge } from "@aces/features/lib/search/services";
 
 /**
- * Sally — the knowledge-base assistant.
+ * Sage — the knowledge-base assistant.
  *
- * Deliberately NOT a language model. Sally retrieves articles and wraps them
+ * Deliberately NOT a language model. Sage retrieves articles and wraps them
  * in a small set of scripted replies. Everything she says about an article
  * comes from that article's own title and summary, so she cannot invent an
  * answer or cite a page that does not exist — which is the failure mode that
@@ -21,23 +21,23 @@ import { searchKnowledge } from "@aces/features/lib/search/services";
  *      that resolves to a published article.
  */
 
-export interface SallyArticle {
+export interface SageArticle {
   title: string;
   summary?: string;
   path: string;
   recordType?: string;
 }
 
-export interface SallyReply {
+export interface SageReply {
   reply: string;
-  articles: SallyArticle[];
+  articles: SageArticle[];
   /** Which retrieval path answered, so the UI can be honest in a demo. */
   source: "index" | "contentful" | "none";
 }
 
 const MAX_ARTICLES = 3;
 
-const toSallyArticle = (article: any): SallyArticle => ({
+const toSageArticle = (article: any): SageArticle => ({
   title: article.title,
   summary: article.summary,
   recordType: article.recordType,
@@ -91,26 +91,26 @@ export async function POST(request: NextRequest) {
   const message = body.message?.trim() ?? "";
 
   if (!message) {
-    return NextResponse.json<SallyReply>({
+    return NextResponse.json<SageReply>({
       reply: "Ask me anything about ZoomInfo and I'll find the article for you.",
       articles: [],
       source: "none",
     });
   }
 
-  let articles: SallyArticle[] = [];
-  let source: SallyReply["source"] = "none";
+  let articles: SageArticle[] = [];
+  let source: SageReply["source"] = "none";
 
   try {
     const { results } = await searchKnowledge(message, { limit: 8 });
     const resolved = results.filter((r) => r.article).slice(0, MAX_ARTICLES);
 
     if (resolved.length) {
-      articles = resolved.map((r) => toSallyArticle(r.article));
+      articles = resolved.map((r) => toSageArticle(r.article));
       source = "index";
     }
   } catch (error) {
-    console.error("Sally: index retrieval failed:", error);
+    console.error("Sage: index retrieval failed:", error);
   }
 
   if (!articles.length) {
@@ -148,13 +148,13 @@ export async function POST(request: NextRequest) {
       .slice(0, MAX_ARTICLES);
 
     if (ranked.length) {
-      articles = ranked.map((r) => toSallyArticle(r.article));
+      articles = ranked.map((r) => toSageArticle(r.article));
       source = "contentful";
     }
   }
 
   if (!articles.length) {
-    return NextResponse.json<SallyReply>({
+    return NextResponse.json<SageReply>({
       reply:
         "I couldn't find an article for that. Try naming the product area — " +
         "Intent, Copilot, Integrations, Enrich — or browse the topics from the " +
@@ -164,7 +164,7 @@ export async function POST(request: NextRequest) {
     });
   }
 
-  return NextResponse.json<SallyReply>({
+  return NextResponse.json<SageReply>({
     reply: pick(openers, message),
     articles,
     source,

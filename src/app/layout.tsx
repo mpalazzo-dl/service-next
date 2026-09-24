@@ -10,11 +10,11 @@ import { palette, primaryFont, theme } from "@aces/theme";
 import { FlexBox } from "@aces/ui";
 import {
   DraftModeBar,
-  EnableSallyAssistant,
+  EnableSageAssistant,
   FooterServer,
   HeaderServer,
   LivePreviewProvider,
-  Sally,
+  Sage,
 } from "@aces/features";
 
 import "swiper/css";
@@ -67,7 +67,7 @@ export default async function RootLayout({
               )}
             </FlexBox>
             <FooterServer appId={appId} preview={isEnabled} lang={lang} />
-            {EnableSallyAssistant && <Sally />}
+            {EnableSageAssistant && <Sage />}
             {isEnabled && <DraftModeBar />}
           </ThemeProvider>
         </AppRouterCacheProvider>

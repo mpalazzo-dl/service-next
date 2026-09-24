@@ -3,10 +3,11 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
 import NextLink from "next/link";
 
-import type { SallyArticle } from "@/app/api/sally/route";
+import type { SageArticle } from "@/app/api/sage/route";
+import { SageOpenOnLoad } from "../../../config";
 
 /**
- * Sally — a support assistant in the Agentforce idiom.
+ * Sage — a support assistant in the Agentforce idiom.
  *
  * She retrieves; she does not generate. Every article she shows is a real
  * published entry, and the words around them come from a fixed set of
@@ -24,9 +25,9 @@ const SF_BLUE_TINT = "#EAF5FE";
 
 interface Message {
   id: number;
-  from: "sally" | "user";
+  from: "sage" | "user";
   text: string;
-  articles?: SallyArticle[];
+  articles?: SageArticle[];
 }
 
 const SUGGESTIONS = [
@@ -36,7 +37,7 @@ const SUGGESTIONS = [
 ];
 
 const GREETING =
-  "Hi, I'm Sally. I can look things up in the ZoomInfo Knowledge Center — " +
+  "Hi, I'm Sage. I can look things up in the ZoomInfo Knowledge Center — " +
   "ask me a question and I'll point you at the right article.";
 
 const SparkleIcon = ({ size = 20 }: { size?: number }) => (
@@ -53,10 +54,10 @@ const SparkleIcon = ({ size = 20 }: { size?: number }) => (
   </svg>
 );
 
-export const Sally = () => {
-  const [open, setOpen] = useState(false);
+export const Sage = () => {
+  const [open, setOpen] = useState(SageOpenOnLoad);
   const [messages, setMessages] = useState<Message[]>([
-    { id: 0, from: "sally", text: GREETING },
+    { id: 0, from: "sage", text: GREETING },
   ]);
   const [input, setInput] = useState("");
   const [thinking, setThinking] = useState(false);
@@ -72,9 +73,19 @@ export const Sally = () => {
     });
   }, [messages, thinking]);
 
+  // Focus only when the user opens the panel. Focusing on first paint would
+  // steal focus from the page and jump the viewport for keyboard and screen
+  // reader users, which is not a reasonable thing to do on load.
+  const openedByUser = useRef(false);
+
   useEffect(() => {
-    if (open) inputRef.current?.focus();
+    if (open && openedByUser.current) inputRef.current?.focus();
   }, [open]);
+
+  const toggle = () => {
+    openedByUser.current = true;
+    setOpen((value) => !value);
+  };
 
   // Escape closes the panel, as it would in any dialog.
   useEffect(() => {
@@ -98,7 +109,7 @@ export const Sally = () => {
     setThinking(true);
 
     try {
-      const response = await fetch("/api/sally", {
+      const response = await fetch("/api/sage", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: text }),
@@ -111,18 +122,18 @@ export const Sally = () => {
         ...current,
         {
           id: nextId.current++,
-          from: "sally",
+          from: "sage",
           text: data.reply,
           articles: data.articles,
         },
       ]);
     } catch (error) {
-      console.error("Sally request failed:", error);
+      console.error("Sage request failed:", error);
       setMessages((current) => [
         ...current,
         {
           id: nextId.current++,
-          from: "sally",
+          from: "sage",
           text: "Something went wrong on my side. Try again in a moment.",
         },
       ]);
@@ -141,9 +152,9 @@ export const Sally = () => {
       {/* Launcher */}
       <button
         type="button"
-        onClick={() => setOpen((v) => !v)}
+        onClick={toggle}
         aria-expanded={open}
-        aria-label={open ? "Close Sally" : "Ask Sally"}
+        aria-label={open ? "Close Sage" : "Ask Sage"}
         style={{
           position: "fixed",
           right: 24,
@@ -179,7 +190,7 @@ export const Sally = () => {
         ) : (
           <>
             <SparkleIcon />
-            Ask Sally
+            Ask Sage
           </>
         )}
       </button>
@@ -188,7 +199,7 @@ export const Sally = () => {
       {open && (
         <section
           role="dialog"
-          aria-label="Sally, the knowledge assistant"
+          aria-label="Sage, the knowledge assistant"
           style={{
             position: "fixed",
             right: 24,
@@ -229,7 +240,7 @@ export const Sally = () => {
               <SparkleIcon size={18} />
             </span>
             <span style={{ lineHeight: 1.25 }}>
-              <strong style={{ display: "block", fontSize: 15 }}>Sally</strong>
+              <strong style={{ display: "block", fontSize: 15 }}>Sage</strong>
               <span style={{ fontSize: 12, opacity: 0.85 }}>
                 AI Agent · ZoomInfo Knowledge Center
               </span>
@@ -381,7 +392,7 @@ export const Sally = () => {
               value={input}
               onChange={(event) => setInput(event.target.value)}
               placeholder="Ask a question…"
-              aria-label="Ask Sally a question"
+              aria-label="Ask Sage a question"
               style={{
                 flex: 1,
                 height: 40,
@@ -427,7 +438,7 @@ export const Sally = () => {
               textAlign: "center",
             }}
           >
-            Sally searches published articles. She does not generate answers.
+            Sage searches published articles. She does not generate answers.
           </p>
         </section>
       )}

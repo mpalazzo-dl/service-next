@@ -8,6 +8,6 @@ export * from "./child-articles";
 export * from "./kb-hero";
 export * from "./knowledge-landing";
 export * from "./knowledge-pagination";
-export * from "./sally";
+export * from "./sage";
 export * from "./taxonomy-browse";
 export * from "./taxonomy-filters";

@@ -39,7 +39,7 @@ export const fetchPageData = async (
       variables: { slug, preview, locale },
     });
 
-    if (!pageResponse.data.pageCollection.items.length) {
+    if (!pageResponse.data?.pageCollection?.items?.length) {
       return {
         pageResponse: { data: { pageCollection: { items: [] } } },
         pageBodyResponse: {
@@ -48,7 +48,7 @@ export const fetchPageData = async (
       };
     }
 
-    const id = pageResponse.data.pageCollection.items[0].sys.id;
+    const id = pageResponse.data?.pageCollection?.items[0].sys.id;
 
     const pageBodyResponse = await client.query({
       query: DefaultPageBodyQuery,
@@ -72,7 +72,7 @@ export const fetchPageDataPreview = async (
       variables: { slug, preview: true, locale },
     });
 
-    const items = pageResponse.data.pageCollection.items;
+    const items = pageResponse.data?.pageCollection?.items ?? [];
     if (!items.length) {
       return { pageEntry: null, pageBodyResponse: null };
     }
@@ -109,7 +109,7 @@ export const fetchSpecialtyPageData = async (
       variables: { specialtyPage, preview, locale },
     });
 
-    if (!pageResponse.data.pageCollection.items.length) {
+    if (!pageResponse.data?.pageCollection?.items?.length) {
       return {
         pageResponse: { data: { pageCollection: { items: [] } } },
         pageBodyResponse: {
@@ -118,7 +118,7 @@ export const fetchSpecialtyPageData = async (
       };
     }
 
-    const id = pageResponse.data.pageCollection.items[0].sys.id;
+    const id = pageResponse.data?.pageCollection?.items[0].sys.id;
 
     const pageBodyResponse = await client.query({
       query: DefaultPageBodyQuery,

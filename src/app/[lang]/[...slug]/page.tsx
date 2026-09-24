@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
 
-import { defaultLocale } from "@aces/i18n";
+import { defaultLocale, locales } from "@aces/i18n";
 import { CatchAllPageProps } from "@aces/types";
 import { sliceSlug, specialtyPageRedirect } from "@aces/utils";
 import { fetchPageData } from "@aces/contentful";
@@ -12,12 +12,25 @@ import {
   PagePreviewClient,
 } from "@aces/features";
 
+/**
+ * `/api/<anything-unrouted>` reaches this catch-all with `lang` bound to
+ * "api", because middleware deliberately skips `/api`. Passing that to
+ * Contentful as a locale returns a null payload, which used to be
+ * dereferenced and surface as a 500 on what is really a 404.
+ */
+const isSupportedLocale = (lang: string) =>
+  locales.some((entry) => entry.locale === lang);
+
 export async function generateMetadata({
   params,
 }: {
   params: Promise<CatchAllPageProps>;
 }): Promise<Metadata> {
   const resolvedParams = await Promise.resolve(params);
+
+  if (!isSupportedLocale(resolvedParams.lang)) {
+    notFound();
+  }
 
   const { isEnabled } = await draftMode();
   const { slug } = resolvedParams;
@@ -40,6 +53,10 @@ export default async function Page({
   params: Promise<CatchAllPageProps>;
 }) {
   const resolvedParams = await Promise.resolve(params);
+
+  if (!isSupportedLocale(resolvedParams.lang)) {
+    notFound();
+  }
 
   const { isEnabled } = await draftMode();
   const { lang = defaultLocale, slug } = resolvedParams;

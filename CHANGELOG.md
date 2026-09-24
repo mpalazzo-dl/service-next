@@ -5,6 +5,40 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.2.1] - 2026-09-24
+
+### Changed
+
+- Sage's panel is open on load, behind a `SageOpenOnLoad` config flag. Focus is
+  only moved into the input when a visitor opens the panel themselves —
+  focusing on first paint would take focus away from the page and jump the
+  viewport for keyboard and screen reader users
+
+## [3.2.0] - 2026-09-24
+
+### Changed
+
+- Renamed the assistant from Sally to **Sage** — component, directory, route
+  (`/api/sage`), types, feature flag (`EnableSageAssistant`), and all copy
+
+### Fixed
+
+- **Any unrouted `/api/*` path returned 500 instead of 404.** Middleware
+  deliberately skips `/api`, so `/api/anything` fell through to the
+  `[lang]/[...slug]` catch-all with `lang` bound to `"api"`. Contentful
+  rejected that as a locale and returned a null payload, which was then
+  dereferenced. The catch-all now 404s on an unsupported locale, and the page
+  services no longer dereference a null GraphQL payload
+
+### Notes
+
+- The Data 360 index now contains ZoomInfo content rather than Brightline, so
+  Sage's index path resolves and the Contentful fallback is used less. Hits
+  still carry no slug, so resolution falls back to matching on title — and the
+  indexed chunk sometimes leads with the article's summary rather than its
+  title, so the wrong article can rank first. Rebuilding the index from the
+  sitemap (making the source a URL) is what fixes this properly
+
 ## [3.1.1] - 2026-09-24
 
 ### Fixed
