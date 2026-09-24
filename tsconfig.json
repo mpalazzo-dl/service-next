@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@aces/cf": ["./src/libs/cf/index.ts"],
+      "@aces/contentful": ["./src/libs/clients/contentful/index.ts"],
+      "@aces/salesforce": ["./src/libs/clients/salesforce/index.ts"],
+      "@aces/features": ["./src/libs/features/index.ts"],
+      "@aces/features/*": ["./src/libs/features/*"],
+      "@aces/hooks": ["./src/libs/hooks/index.ts"],
+      "@aces/i18n": ["./src/libs/i18n/index.ts"],
+      "@aces/store": ["./src/libs/store/index.ts"],
+      "@aces/theme": ["./src/libs/theme/index.ts"],
+      "@aces/types": ["./src/libs/types/index.ts"],
+      "@aces/ui": ["./src/libs/ui/index.ts"],
+      "@aces/utils": ["./src/libs/utils/index.ts"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules", "src/stories"]
+}

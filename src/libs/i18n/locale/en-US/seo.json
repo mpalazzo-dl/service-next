@@ -1,0 +1,10 @@
+{
+  "articles": {
+    "title": "Knowledge Base",
+    "description": "Search articles, guides and troubleshooting help."
+  },
+  "search": {
+    "description": "",
+    "title": "Search"
+  }
+}

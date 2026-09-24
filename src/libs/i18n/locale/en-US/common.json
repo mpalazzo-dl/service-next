@@ -1,0 +1,69 @@
+{
+  "by": "By",
+  "clear": "Clear",
+  "contact": "Contact",
+  "followUs": "Follow Us",
+  "learnMore": "Learn More",
+  "back": "Back",
+  "breadcrumbs": {
+    "home": "Home",
+    "articles": "Knowledge Center",
+    "search": "Search"
+  },
+  "postType": {
+    "order": {
+      "category": "Category",
+      "date": "Date",
+      "order": "Order",
+      "title": "Title"
+    },
+    "listingDisplay": {
+      "list": "List",
+      "grid": "Grid"
+    },
+    "allCategories": "All",
+    "relatedArticlesTitle": "Related articles",
+    "backToArticleListing": "Back to the Knowledge Center",
+    "listingTitle": "Knowledge Center",
+    "read": "read",
+    "min": "min",
+    "noResults": "No articles found."
+  },
+  "pagination": {
+    "loadMore": "Load More",
+    "youViewed": "You’ve viewed",
+    "of": "of",
+    "posts": "posts"
+  },
+  "readMore": "Read More",
+  "search": {
+    "searchbarPlaceholder": "Search for answers",
+    "searchError": "Error loading search results:",
+    "resultsFor": "Results for",
+    "topResultsHeader": "Top Results",
+    "noResults": "No Results Found"
+  },
+  "knowledge": {
+    "title": "ZoomInfo Knowledge Center",
+    "searchPlaceholder": "Search for answers",
+    "popularSearches": "Popular searches",
+    "inThisSection": "In this section",
+    "onThisPage": "On this page",
+    "filters": "Filters",
+    "articleType": "Article type",
+    "clearFilters": "Clear filters",
+    "articleCount": {
+      "one": "article",
+      "other": "articles"
+    },
+    "feedback": {
+      "prompt": "Was this article helpful?",
+      "thanks": "Thanks for your feedback.",
+      "yes": "Yes",
+      "no": "No",
+      "error": "Sorry — we could not record that. Please try again."
+    },
+    "stillNeedHelp": "Still need help?",
+    "contactSupport": "Contact support"
+  }
+}

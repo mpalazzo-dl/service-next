@@ -1,0 +1,143 @@
+/*
+ * Article body typography.
+ *
+ * Previously `list-style: none` was applied to both list types while only
+ * `ul li:before` drew a marker — so every ordered list rendered as unnumbered
+ * lines, which is unusable for step-by-step instructions. Ordered lists now
+ * use CSS counters and unordered lists keep a drawn bullet.
+ */
+
+.richText {
+  color: #2f3941;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.richText p {
+  margin: 0 0 1.25rem;
+}
+
+.richText p:last-child {
+  margin-bottom: 0;
+}
+
+.richText ul,
+.richText ol {
+  margin: 0 0 1.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.richText ol {
+  counter-reset: rich-text-ol;
+}
+
+.richText ul li,
+.richText ol li {
+  font-size: 16px;
+  line-height: 1.7;
+  margin-bottom: 0.5rem;
+  padding-left: 1.75rem;
+  position: relative;
+}
+
+.richText ul li p,
+.richText ol li p {
+  margin-bottom: 0;
+}
+
+.richText ul li::before {
+  background-color: #68737d;
+  border-radius: 50%;
+  content: "";
+  height: 5px;
+  width: 5px;
+  left: 0.5rem;
+  position: absolute;
+  top: 0.75em;
+}
+
+.richText ol li {
+  counter-increment: rich-text-ol;
+}
+
+.richText ol li::before {
+  content: counter(rich-text-ol) ".";
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: #68737d;
+}
+
+/* Nested lists continue the indent without restarting the visual rhythm. */
+.richText li > ul,
+.richText li > ol {
+  margin: 0.5rem 0 0;
+}
+
+.richText blockquote {
+  padding: 0.25rem 0 0.25rem 1.25rem;
+  margin: 0 0 1.5rem;
+  border-left: 3px solid #d8dcde;
+  color: #49545c;
+}
+
+.richText blockquote ol:last-child,
+.richText blockquote p:last-child,
+.richText blockquote ul:last-child {
+  margin-bottom: 0;
+}
+
+/* In-body links must read as links on a support site. */
+.richText a {
+  color: #1f73b7;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.richText a:hover {
+  color: #144a75;
+}
+
+.richText hr {
+  border: none;
+  border-top: 1px solid #d8dcde;
+  margin: 2rem 0;
+}
+
+/* next/image sets width/height inline, so the real cap is passed as a prop in
+   the embedded-image branch of the renderer; this is just a floor. */
+.richText img {
+  max-width: 100%;
+  border-radius: 4px;
+}
+
+.richText table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0 0 1.5rem;
+  font-size: 15px;
+}
+
+.richText th,
+.richText td {
+  border: 1px solid #d8dcde;
+  padding: 0.625rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.richText th {
+  background: #f8f9f9;
+  font-weight: 600;
+}
+
+.richText code {
+  background: #f1f3f5;
+  border: 1px solid #e9ebed;
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+  font-size: 0.9em;
+}
