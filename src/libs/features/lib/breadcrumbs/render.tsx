@@ -42,12 +42,12 @@ export const ArticlesPageBreadcrumbs = async ({
     <Breadcrumbs>
       {showHome && (
         <PageBreadcrumb>
-          <Link href={RouteDirectory.Homepage}>{t.breadcrumbs.home}</Link>
+          <Link href={RouteDirectory.Homepage}>{t?.breadcrumbs?.home ?? "Home"}</Link>
         </PageBreadcrumb>
       )}
       <PageBreadcrumb disable>
         <Link href={RouteDirectory.Articles} aria-current="page">
-          {t.breadcrumbs.articles}
+          {t?.breadcrumbs?.articles ?? "Knowledge Center"}
         </Link>
       </PageBreadcrumb>
     </Breadcrumbs>
@@ -72,12 +72,12 @@ export const ArticlePageBreadcrumbs = async ({
     <Breadcrumbs marginY={7}>
       {showHome && (
         <PageBreadcrumb>
-          <Link href={RouteDirectory.Homepage}>{t.breadcrumbs.home}</Link>
+          <Link href={RouteDirectory.Homepage}>{t?.breadcrumbs?.home ?? "Home"}</Link>
         </PageBreadcrumb>
       )}
       <PageBreadcrumb>
         <Link href={RouteDirectory.Articles} aria-current="page">
-          {t.breadcrumbs.articles}
+          {t?.breadcrumbs?.articles ?? "Knowledge Center"}
         </Link>
       </PageBreadcrumb>
       <PageBreadcrumb disable>
@@ -99,12 +99,12 @@ export const SearchPageBreadcrumbs = async ({
     <Breadcrumbs>
       {showHome && (
         <PageBreadcrumb>
-          <Link href={RouteDirectory.Homepage}>{t.breadcrumbs.home}</Link>
+          <Link href={RouteDirectory.Homepage}>{t?.breadcrumbs?.home ?? "Home"}</Link>
         </PageBreadcrumb>
       )}
       <PageBreadcrumb disable>
         <Link href={RouteDirectory.Search} aria-current="page">
-          {t.breadcrumbs.search}
+          {t?.breadcrumbs?.search ?? "Search"}
         </Link>
       </PageBreadcrumb>
     </Breadcrumbs>

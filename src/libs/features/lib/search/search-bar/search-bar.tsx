@@ -71,7 +71,7 @@ export const SearchBar = ({
       <Input
         id="site-search"
         backgroundColor={palette.grey[100]}
-        placeholder={loading ? "" : t.search.searchbarPlaceholder}
+        placeholder={loading ? "" : (t?.search?.searchbarPlaceholder ?? "Search")}
         value={searchValue}
         fullWidth
         onChange={handleSearchInput}

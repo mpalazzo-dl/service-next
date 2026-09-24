@@ -98,6 +98,48 @@ export const ArticleListQuery = gql`
 `;
 
 /**
+ * Direct Contentful keyword search, used as a retrieval fallback.
+ *
+ * The Data 360 index is the primary ranker, but it only helps when the index
+ * and the space hold the same corpus. When a hit cannot be resolved to a
+ * published article — today, because the index is built from a different
+ * corpus — this keeps the assistant useful by searching the space directly.
+ * `bodyCopy_contains` matches the article's own rich text, though not text
+ * inside embedded entries.
+ */
+export const ArticleFallbackSearchQuery = gql`
+  ${ArticleCardFragment}
+
+  query (
+    $query: String!
+    $channels: [String]!
+    $preview: Boolean!
+    $locale: String!
+    $limit: Int!
+  ) {
+    articleCollection(
+      where: {
+        channelVisibility_in: $channels
+        OR: [
+          { title_contains: $query }
+          { summary_contains: $query }
+          { bodyCopy_contains: $query }
+          { keywords_contains_some: [$query] }
+        ]
+      }
+      limit: $limit
+      preview: $preview
+      locale: $locale
+    ) {
+      total
+      items {
+        ...ArticleCard
+      }
+    }
+  }
+`;
+
+/**
  * Resolves a batch of search hits to published articles, by slug or by title.
  *
  * Title is the working key while the index is built from Knowledge records,

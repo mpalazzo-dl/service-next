@@ -46,7 +46,10 @@ export async function generateMetadata({
   const t = await getLocale(lang, "seo");
 
   return await buildMetadata(
-    { title: t.articles.title, description: t.articles.description },
+    {
+      title: t?.articles?.title ?? "Knowledge Center",
+      description: t?.articles?.description ?? "",
+    },
     {},
   );
 }

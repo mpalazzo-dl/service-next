@@ -32,7 +32,7 @@ export const LoadMore = ({
             <Skeleton variant="text" width={120} />
           ) : (
             <Text>
-              {`${t.pagination.youViewed} ${currentNumber} ${t.pagination.of} ${total} ${t.pagination.posts}`}
+              {`${t?.pagination?.youViewed ?? "You've viewed"} ${currentNumber} ${t?.pagination?.of ?? "of"} ${total} ${t?.pagination?.posts ?? "articles"}`}
             </Text>
           )}
           <LinearProgress
@@ -53,7 +53,7 @@ export const LoadMore = ({
         ) : title ? (
           title
         ) : (
-          t.pagination.loadMore
+          (t?.pagination?.loadMore ?? "Load more")
         )}
       </Button>
     </FlexBox>

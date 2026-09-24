@@ -14,7 +14,7 @@ export default async function Custom404() {
     <FlexBox flex={1}>
       <Container style={{ display: "flex", flex: 1 }}>
         <FlexBox alignItems={"center"} justifyContent="center" flex={1}>
-          <Text fontWeight={600}>{t.notFound}</Text>
+          <Text fontWeight={600}>{t?.notFound ?? "Page not found"}</Text>
         </FlexBox>
       </Container>
     </FlexBox>

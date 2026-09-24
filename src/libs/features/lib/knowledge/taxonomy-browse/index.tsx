@@ -6,7 +6,6 @@ import { RouteDirectory } from "@aces/types";
 import { palette } from "@aces/theme";
 import { Box, Col, FlexBox, H2, Icon, Row, Text } from "@aces/ui";
 
-
 interface TaxonomyBrowseProps {
   facets: TaxonomyFacet[];
   title?: string;
@@ -34,12 +33,21 @@ export const TaxonomyBrowse = ({
     <Box component="section" paddingTop={12}>
       <H2>{title}</H2>
 
-      <Row spacing={4} marginTop={6} flexDirection={{ xs: "column", sm: "row" }}>
+      <Row
+        spacing={4}
+        marginTop={6}
+        marginBottom={14}
+        flexDirection={{ xs: "column", sm: "row" }}
+      >
         {facet.tree.map((concept) => (
           <Col key={concept.id} size={{ xs: 12, sm: 6, md: 4 }}>
             <NextLink
               href={`${RouteDirectory.Topics}/${conceptSlug(concept)}`}
-              style={{ textDecoration: "none", display: "block", height: "100%" }}
+              style={{
+                textDecoration: "none",
+                display: "block",
+                height: "100%",
+              }}
             >
               <FlexBox
                 alignItems="center"
@@ -55,7 +63,9 @@ export const TaxonomyBrowse = ({
                 }}
               >
                 <Box>
-                  <Text style={{ fontWeight: 600, color: palette.text.primary }}>
+                  <Text
+                    style={{ fontWeight: 600, color: palette.text.primary }}
+                  >
                     {concept.label}
                   </Text>
                   {concept.children.length > 0 && (

@@ -4,6 +4,12 @@ export const EnableArticles = true;
 
 export const EnableSearch = true;
 
+/**
+ * Sally, the knowledge assistant in the global wrapper.
+ * Retrieval-only: she surfaces published articles and never generates prose.
+ */
+export const EnableSallyAssistant = true;
+
 export const PaginationUrlParam = "page";
 
 /**

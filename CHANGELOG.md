@@ -5,6 +5,45 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.1.1] - 2026-09-24
+
+### Fixed
+
+- **The global search icon crashed the app.** `getLocale` indexed straight into
+  its translations map, so an unrecognised locale or section threw. The error
+  was caught by `useGetLocale`, which then left `t` as `null` while `loading`
+  had already flipped to `false` — and every consumer dereferenced `t` directly
+  (`t.search.searchbarPlaceholder`), throwing
+  `Cannot read properties of null (reading 'search')` and taking down the
+  whole page rather than dropping one label.
+  `getLocale` now falls back to the default locale and returns `{}` instead of
+  throwing, `useGetLocale` seeds `t` with `{}`, and all nine locale reads across
+  the search bar, breadcrumbs, pagination, article navigation, not-found page
+  and mobile drawer are optional-chained with literal fallbacks
+
+## [3.1.0] - 2026-09-24
+
+### Added
+
+- **Sally** — a knowledge assistant in the global wrapper, styled after the
+  Agentforce chat. Launcher bottom-right on every page, with suggested
+  prompts, article cards, and Escape-to-close.
+  Retrieval-only by design: she surfaces published articles and never
+  generates prose, so she cannot invent an answer or cite a page that does not
+  exist. Every title and summary she shows comes from the entry itself.
+- `POST /api/sally` — tries the Data 360 index first (joined to Contentful),
+  then falls back to a keyword search over the space. Stop words are stripped
+  and each content word is searched separately, then ranked by how many terms
+  matched, with a bonus for terms appearing in the title
+- `EnableSallyAssistant` feature flag
+
+### Notes
+
+- The fallback exists because the Data 360 index still holds the Brightline
+  corpus while the space holds ZoomInfo content, so index hits do not resolve.
+  Once the index is rebuilt from this site, the index path takes over on its
+  own — the response reports which path answered
+
 ## [3.0.1] - 2026-09-24
 
 ### Fixed

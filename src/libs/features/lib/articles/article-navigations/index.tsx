@@ -16,7 +16,7 @@ export const BackToArticleListing = async ({
   return (
     <Link href={RouteDirectory.Articles} color="primary">
       {showIcon && <Icon icon="ChevronLeft" />}
-      {t.postType.backToArticleListing}
+      {t?.postType?.backToArticleListing ?? "Back to the Knowledge Center"}
     </Link>
   );
 };

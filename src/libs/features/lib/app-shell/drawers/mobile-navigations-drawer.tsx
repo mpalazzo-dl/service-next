@@ -56,7 +56,7 @@ export const MobileNavigationsDrawerHeader = ({
             >
               <Icon icon="ChevronLeft" marginRight={1} />
               {t ? (
-                <H6 component="span">{t.back}</H6>
+                <H6 component="span">{t?.back ?? "Back"}</H6>
               ) : (
                 <Skeleton variant="text" width={40} />
               )}
